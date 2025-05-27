@@ -249,13 +249,13 @@ class model(pl.LightningModule):
     def dir_loss(self,pred,GT,ctrl,cluster=False,delta=0.7):
         # MSE, Huber,  cos_similarity
 
-        GT_dir = torch.tanh(GT.squeeze() - ctrl.squeeze())
-        pred_dir = torch.tanh(pred - ctrl.reshape(1,-1))
-        if cluster:
-            loss=torch.mean((pred_dir-GT_dir)**2)
-        else:
-            loss=torch.sum(torch.mean((pred_dir-GT_dir)**2,dim=1))
-        return loss
+        # GT_dir = torch.tanh(GT.squeeze() - ctrl.squeeze())
+        # pred_dir = torch.tanh(pred - ctrl.reshape(1,-1))
+        # if cluster:
+        #     loss=torch.mean((pred_dir-GT_dir)**2)
+        # else:
+        #     loss=torch.sum(torch.mean((pred_dir-GT_dir)**2,dim=1))
+        # return loss
 
         # Huber
         # if pert_data is not None:
@@ -263,13 +263,13 @@ class model(pl.LightningModule):
         #     GT=GT[:,idx]
         #     ctrl=ctrl[:,idx]
         #     pred=pred[:,idx]
-        #
-        # GT_dir = (GT.squeeze() - ctrl.squeeze())
-        # pred_dir = (pred - ctrl.reshape(1,-1))
-        # error = GT_dir - pred_dir
-        # is_small_error = torch.abs(error) <= delta
-        # loss = torch.where(is_small_error, 0.5 * error ** 2, delta * (torch.abs(error) - 0.5 * delta))
-        # return torch.sum(torch.mean(loss,dim=1))
+
+        GT_dir = (GT.squeeze() - ctrl.squeeze())
+        pred_dir = (pred - ctrl.reshape(1,-1))
+        error = GT_dir - pred_dir
+        is_small_error = torch.abs(error) <= delta
+        loss = torch.where(is_small_error, 0.5 * error ** 2, delta * (torch.abs(error) - 0.5 * delta))
+        return torch.sum(torch.mean(loss,dim=1))
 
         # cos
         # GT_dir = (GT.squeeze() - ctrl.squeeze())
@@ -332,14 +332,7 @@ class model(pl.LightningModule):
         g_cc,g_cn,g_nn=self.get_sub_graph(G)
 
         f = self.GRN_network([g_cc,g_cn,g_nn],f_mm)
-        #
-        # f = self.norm(f).squeeze()
-        # f = self.relu(f)
-        # f = self.gene_decoder(f)
-        # f = f.unsqueeze(-1)
-        #
-        # pred = torch.sum(f*self.indv_w1,dim=1)+self.indv_b1
-        # pred = pred + self.ctrl.unsqueeze(-1).to(pred.device)
+
 
 
         return self.desc_embed,self.seq_embed,f

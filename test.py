@@ -17,6 +17,7 @@ from pytorch_lightning import Trainer
 os.environ["passing CUDA_LAUNCH_BLOCKING"]="1"
 
 data_name="adamson"
+# data_name="norman"
 hvg_num=5000
 pertdata=PertData(data_name=data_name,hvg_num=hvg_num)
 model=model(pertdata).to('cuda')

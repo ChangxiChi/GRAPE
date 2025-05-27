@@ -11,7 +11,7 @@ The pre-trained LLMs can be downloaded from the reference mentioned in the main 
 ## 📁 Repository Structure  
 ```plaintext
 GRAPE/
-├── data/                       # Download to here
+├── data/                       # Dictionary, create it and download dataset to here
 ├── from_pertrain_bert/         # Pre-trained LLM for gene descriptions
 ├── from_pertrain_DNA_hyena/    # Pre-trained LLM for DNA sequences
 ├── results/                    # Output 
