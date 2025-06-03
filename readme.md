@@ -1,3 +1,4 @@
+## GRAPE: Heterogeneous Graph Representation Learning for Genetic Perturbation with Coding and Non-Coding Biotype (IJCAI2025)
 ## 🏁 Getting Started
 
 ### Preparation
@@ -38,3 +39,6 @@ Finally, run this file to train our model.
 ```bash
 python test.py --output result/DatasetName_HvgNum/
 ```
+
+### Step 4: Evaluation Results
+See 📁 [`predict.py`](./predict.py) for details.
